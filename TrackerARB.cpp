@@ -82,6 +82,10 @@ int TrackerARB::getRawPose(Mat &frame, Vec3d &tVec, Vec3d &rVec) {
 int TrackerARB::getPose(Mat &frame, Vec3d &tVec, Vec3d &rVec) {
   int detectedBoard = 0;
   if (!markerIds.empty()) {
+    if(markerIds.size() > 10) {
+      markerIds.resize(10);
+      markerCorners.resize(10);
+    }
     detectedBoard = estimatePoseBoard(markerCorners, markerIds, board, cameraMatrix, distCoeffs, rVec, tVec);
     offsetPose(rVec, tVec, tVec);
     if (showFrame) {
